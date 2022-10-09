@@ -1,0 +1,49 @@
+\documentclass[a4paper]{article}
+\usepackage{paracol}
+\usepackage{eso-pic}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{fontspec}
+\usepackage{fix-cm}
+\usepackage{setspace}
+
+\usepackage[base]{babel}
+\usepackage{lipsum}
+
+\addtolength{\topmargin}{-1.31in}
+
+\AddToShipoutPictureBG{\color[RGB]{244,244,244}%
+\AtPageLowerLeft{\rule{2.57in}{\paperheight}}}
+
+\newfontfamily{\mtstitle}[LetterSpace=10]{Montserrat}
+\newfontfamily{\mtsl}[UprightFont={* Light}]{Montserrat}
+
+\pagenumbering{gobble} %disables page numbering
+
+\begin{document}
+
+\begin{center}
+\begin{tikzpicture}
+    \node[rectangle, draw, fill=white, very thick, align=center, font=\setstretch{2}, minimum width = 11.15cm, minimum height = 3.8cm] (r) at (0,0)
+        {%
+            {\mtstitle \fontsize{18}{21.6} \textbf{FELIPE ZORZO}}\\%
+            {\mtsl \fontsize{10}{12} SOFTWARE ENGINEER}%
+        };
+\end{tikzpicture}
+\end{center}
+
+\begin{paracol}{2}
+    \mtsl
+
+    \begin{column}
+        \setstretch{2}
+        Ggray \lipsum
+    \end{column}
+
+    \begin{column}
+        Ggray \lipsum
+    \end{column}
+
+\end{paracol}
+
+\end{document}
