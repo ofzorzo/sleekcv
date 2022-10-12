@@ -1,4 +1,4 @@
-\documentclass[oneside, a4paper]{article}
+\documentclass[a4paper]{article}
 
 \usepackage{paracol} % allows multiple columns
 \usepackage{eso-pic} % creates the gray rectangle in the background
@@ -8,16 +8,16 @@
 \usepackage{anyfontsize} % allows selection of different font sizes
 \usepackage{fix-cm}
 \usepackage{setspace} % changes space between lines
-%\usepackage[showframe]{geometry} % shows the page layout
+\usepackage[showframe]{geometry} % shows the page layout
 %\usepackage{layout} % shows the page layout and dimensions of the layout as an image
-\usepackage{geometry} % changes page layout
+% \usepackage{geometry} % changes page layout
 \usepackage{changepage} % changes column width
 
 \usepackage[english]{babel} % correctly and automatically hyphenate english words
 \usepackage{lipsum}
 
-%\backgroundcolor{c[0]}[rgb]{1,0.8,1} % visualize left  column
-%\backgroundcolor{c[1]}[rgb]{1,1,0.8} % visualize right column
+\backgroundcolor{c[0]}[rgb]{1,0.8,1} % visualize left  column
+\backgroundcolor{c[1]}[rgb]{1,1,0.8} % visualize right column
 
 \geometry{
 	total={210mm,297mm}, 	% set A4 size
@@ -42,7 +42,8 @@
 \pagenumbering{gobble} % disables page numbering
 
 \begin{document}
-	\setlength{\intextsep}{0.44in plus 2.0pt minus 2.0pt} % changes spacing between title and text
+	% HACK: the line below is a hack that affects the spacing between every float and the underlying text. Shouldn't be a problem since this is the only float we're going to use.
+	% \setlength{\intextsep}{0.44in plus 2.0pt minus 2.0pt} % changes spacing between title and text
 	% creates the rectangle that contains the name and profession
 	\begin{figure}[!ht]
 		\centering
