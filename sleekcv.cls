@@ -3,8 +3,8 @@
 \ProvidesClass{sleekcv}[2022-10-11 v0.0.9 sleek curriculum vitae document class]
 
 \DeclareOption{a4paper}{
-    \setlength\paperheight{297mm}
-    \setlength\paperwidth{210mm}
+	\setlength\paperheight{297mm}
+	\setlength\paperwidth{210mm}
 }
 
 % font size options
@@ -55,9 +55,10 @@
 
 % sets the gray rectangle as background
 \AddToShipoutPictureBG{\color[RGB]{244,244,244}%
-	\AtPageLowerLeft{\rule{2.57in}{\paperheight}}} % this lines defines the rectangle position (lower left) and sizes(width = 2.57 inches, height = current paperheight (297mm))
+	\AtPageLowerLeft{\rule{2.55in}{\paperheight}}} % this lines defines the rectangle position (lower left) and sizes(width = 2.57 inches, height = current paperheight (297mm))
 
 \color[RGB]{33,33,33}
+\definecolor{softblack}{RGB}{33,33,33}
 
 \newfontfamily{\mtstitle}[LetterSpace=12]{Montserrat} % creates a new font family with more spacing for the title
 \newfontfamily{\mtssubtitle}[LetterSpace=24]{Montserrat}
@@ -91,62 +92,45 @@
 	\cvheader%
 	\fontspec{Montserrat}%
 	\begin{paracol}{2}%
-}
-\AtEndDocument{\end{paracol}}
-
-\newenvironment{margcol}{%
-    \switchcolumn[0]*%
-    \fontsize{8.4}{10.08}\selectfont%
-    \begin{adjustwidth}{0in}{1.91in}%
-    \sloppy%
-}{
-    \end{adjustwidth}
-}
-
-\newenvironment{bodycol}{%
-    \switchcolumn[1]%
-    \begin{adjustwidth}{-1.37in}{0in}%
-    \sloppy%
-}{
-    \end{adjustwidth}
-}
+	}
+	\AtEndDocument{\end{paracol}}
 
 \newcommand*{\cventry}[2][]{%
 	\def\temp{#1}\ifx\temp\empty% tests if subtitle is empty
-	#2%
+	{\fontsize{7.03}{8.44}\selectfont #2}%
 	\else% 		if it's not empty...
 	{\fontsize{6.47}{7.76}\selectfont \textbf{#1}}% prints subtitle
 	\vspace{0.03in}\newline%	... prints a newline so we have a space between subtitle and content
-	{\fontsize{7.02}{8.42}\selectfont #2}%
+	{\fontsize{7.03}{8.44}\selectfont #2}%
 	\fi
 	\vspace{0.12in}\newline% defines spacing between each entry
 }
-%TODO: adjust spacing between \cvgrade and \cvimplicitlink and \cvexplicitlink and \cvemail elements
+
 \newcommand*{\cvimplicitlink}[2]{%
-%	\vspace{0.14in}\newline% defines spacing between each entry
+	%	\vspace{0.14in}\newline% defines spacing between each entry
 	{\underline{\href{#2}{#1}}}% prints subtitle
 	\vspace{0.12in}\newline% defines spacing between each entry
 }
 
 \newcommand*{\cvexplicitlink}[3][]{%
-	{\fontsize{6.47}{7.76}\selectfont \textbf{#1}}% prints subtitle
 	\def\temp{#1}\ifx\temp\empty% tests if subtitle is empty
-	% nothing to add in case the subtitle is empty
+	{\fontsize{7.03}{8.44}\selectfont \href{#3}{#2}}%
 	\else% 		if it's not empty...
-	\newline%	... prints a newline so we have a space between subtitle and content
+	{\fontsize{6.47}{7.76}\selectfont \textbf{#1}}% prints subtitle
+	\vspace{0.03in}\newline%	... prints a newline so we have a space between subtitle and content
+	{\fontsize{7.03}{8.44}\selectfont \href{#3}{#2}}%
 	\fi
-	\href{#3}{#2}%
 	\vspace{0.12in}\newline% defines spacing between each entry
 }
 
 \newcommand*{\cvemail}[3][]{%
-	{\fontsize{6.47}{7.76}\selectfont \textbf{#1}}% prints subtitle
 	\def\temp{#1}\ifx\temp\empty% tests if subtitle is empty
-	% nothing to add in case the subtitle is empty
+	{\fontsize{7.03}{8.44}\selectfont \href{mailto:#3}{#2}}%
 	\else% 		if it's not empty...
-	\newline%	... prints a newline so we have a space between subtitle and content
+	{\fontsize{6.47}{7.76}\selectfont \textbf{#1}}% prints subtitle
+	\vspace{0.03in}\newline%	... prints a newline so we have a space between subtitle and content
+	{\fontsize{7.03}{8.44}\selectfont \href{mailto:#3}{#2}}%
 	\fi
-	{\fontsize{7.02}{8.42}\selectfont \href{mailto:#3}{#2}}%
 	\vspace{0.12in}\newline% defines spacing between each entry
 }
 
@@ -158,7 +142,7 @@
 		\begin{scope}
 			\clip (1em-.3em,-.3em) rectangle (#2em +.5em ,.3em);
 			\foreach \x in {1,2,...,5}{
-				\path[fill=black] (\x em,0) circle (.25em);
+				\path[fill=softblack] (\x em,0) circle (.25em);
 			}
 		\end{scope}
 		\foreach \x in {1,2,...,5}{
@@ -168,7 +152,25 @@
 	\vspace{0.12in}\newline% defines spacing between each entry
 }
 
+\newenvironment{margcol}{%
+	\switchcolumn[0]*%
+	\fontsize{8.43}{10.12}\selectfont%
+	\begin{adjustwidth}{0in}{1.93in}%
+		\sloppy%
+	}{
+	\end{adjustwidth}
+}
+
 \newenvironment{margsection}[1][]{%
-	{\mtssubtitle \fontsize{8.43}{10.12}\selectfont \textbf{#1}}%
+	{\raggedright \par}%
+	{\mtssubtitle \noindent\textbf{#1}}%
 	\vspace{0.09in}\hrule height 0.8pt \relax\vspace{0.16in}\noindent%
-}{\vspace{0.05in}\newline}
+}{\vspace{0.05in}}
+
+\newenvironment{bodycol}{%
+	\switchcolumn[1]%
+	\begin{adjustwidth}{-1.37in}{0in}%
+		\sloppy%
+	}{
+	\end{adjustwidth}
+}
