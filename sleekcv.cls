@@ -18,34 +18,35 @@
 \ProcessOptions\relax
 \input{size1\@ptsize.clo}
 
-\RequirePackage{paracol}% allows multiple columns
-\RequirePackage{eso-pic}% creates the gray rectangle in the background
-\RequirePackage{xcolor}% allows color picking
-\RequirePackage{tikz}% creates the rectangle aroung the name+profession
-\RequirePackage{fontspec}% allows changing fonts settings
 \RequirePackage{anyfontsize}% allows selection of different font sizes
-\RequirePackage{fix-cm}
-\RequirePackage{setspace}% changes space between lines
-% \RequirePackage[showframe]{geometry} % shows the page layout
-% \RequirePackage{layout} % shows the page layout and dimensions of the layout as an image
-\RequirePackage{geometry}% changes page layout
-\RequirePackage{changepage}% changes column width
-\PassOptionsToPackage{pdfpagelabels=false}{hyperref}
-\RequirePackage[hidelinks]{hyperref}%
-
 \RequirePackage[english]{babel} % correctly and automatically hyphenate english words
-\RequirePackage{lipsum}
-\usepackage{lmodern}
+\RequirePackage{changepage}% changes column width
+\RequirePackage{eso-pic}% creates the gray rectangle in the background
+\RequirePackage{etoolbox}% provides \AfterEndPreamble
+\RequirePackage{fontspec}% allows changing fonts settings
+\RequirePackage{setspace}% changes space between lines
+\RequirePackage{tikz}% creates the rectangle aroung the name+profession
+\RequirePackage{xcolor}% allows color picking
 
+\PassOptionsToPackage{pdfpagelabels=false}{hyperref}% supress annoying hyperref warning
+\RequirePackage[hidelinks]{hyperref}% enables hypertext links in the document
+
+\RequirePackage{float}% allows us to create a figure environment as if this was an article class
+\newfloat{figure}{htbp}{figs}
+
+\RequirePackage{paracol}% allows multiple columns
 % \backgroundcolor{c[0]}[rgb]{1,0.8,1} % visualize left  column
 % \backgroundcolor{c[1]}[rgb]{1,1,0.8} % visualize right column
 
+\RequirePackage{geometry}% changes page margins and overall layout
+% \RequirePackage[showframe]{geometry} % shows the page layout
+% \RequirePackage{layout} % shows the page layout and dimensions of the layout as an image
 \geometry{
-	total={210mm,297mm}, 	% set A4 size
-	left=0.62in,				% make margins equal in every side
-	right=0.62in,				% make margins equal in every side
-	top=0.42in,				% make margins equal in every side
-	bottom=0.55in,				% make margins equal in every side
+	a4paper,
+	left=0.62in,
+	right=0.62in,
+	top=0.42in,
+	bottom=0.55in,
 	marginparwidth=0in,		% remove margin notes
 	marginparsep=0in,		% remove margin notes
 	headheight=0in,			% remove header
@@ -53,25 +54,22 @@
 	footskip=0in			%remove footer
 }
 
-% sets the gray rectangle as background
+% sets a gray vertical rectangle as background
 \AddToShipoutPictureBG{\color[RGB]{244,244,244}%
 	\AtPageLowerLeft{\rule{2.55in}{\paperheight}}} % this lines defines the rectangle position (lower left) and sizes(width = 2.57 inches, height = current paperheight (297mm))
 
-\color[RGB]{33,33,33}
-\definecolor{softblack}{RGB}{33,33,33}
+\color[RGB]{33,33,33}% sets the default color for the document
+\definecolor{softblack}{RGB}{33,33,33}% gives a name to that color
 
 \newfontfamily{\mtstitle}[LetterSpace=12]{Montserrat}% creates a new font family with more spacing for the title
 \newfontfamily{\mtssubtitle}[LetterSpace=24]{Montserrat}% even more spacing
 \newfontfamily{\mtsl}[UprightFont={* Light}]{Montserrat}% creates a new font family for the light version of Montserrat
 
-\pagenumbering{gobble} % disables page numbering
+\pagenumbering{gobble}% disables page numbering
 
-\newcommand*{\defname}[2]{\def\firstname{#1}\def\lastname{#2}}
+\newcommand*{\defname}[2]{\def\firstname{#1}\def\lastname{#2}}% sets name and last name
 
-\newcommand*{\defprofession}[1]{\def\profession{#1}}
-
-\usepackage{float}
-\newfloat{figure}{htbp}{figs}
+\newcommand*{\defprofession}[1]{\def\profession{#1}}% sets profession
 
 % HACK: the line below is a hack that affects the spacing between every float and the underlying text. Shouldn't be a problem since this is the only float we're going to use.
 \setlength{\intextsep}{0.41in plus 2.0pt minus 2.0pt} % changes spacing between title and text
@@ -88,12 +86,16 @@
 		\end{tikzpicture}
 	\end{figure}
 }
-\AtBeginDocument{\global\expandafter\let \csname @nodocument\endcsname \relax
+
+% \AfterEndPreamble code is part of the document body. Therefore, we can instantiate our header and initialize our two columns.
+\AfterEndPreamble{
 	\cvheader%
 	\fontspec{Montserrat}%
 	\begin{paracol}{2}%
-	}
-	\AtEndDocument{\end{paracol}}
+}
+
+% \AtEndDocument is still considered as being part of the document body. Therefore, we can finalize our multi-column document.
+\AtEndDocument{\end{paracol}}
 
 \newcommand*{\cventry}[2][]{%
 	\def\temp{#1}\ifx\temp\empty% tests if subtitle is empty
@@ -138,17 +140,17 @@
 \newcommand{\cvgrade}[2]{%
 	#1\newline\vspace{-0.11in}\newline% prints subtitle
 	\begin{tikzpicture}
-%		\draw [fill=red] (1.2em -.35em,-.35em) rectangle (6em +.35em ,.35em);% visualize outer clipping box
-		\clip (1.2em -.35em,-.35em) rectangle (6em +.35em ,.35em);
+%		\draw [fill=red] (1.2em -.32em,-.32em) rectangle (6em +.32em ,.32em);% visualize outer clipping box
+		\clip (1.2em -.32em,-.32em) rectangle (6em +.32em ,.32em);
 		\begin{scope}
-%			\draw [color=green] (1.2em -.35em,-.35em) rectangle (1.2*#2 em +.6em ,.35em);% visualize inner clipping box
-			\clip (1.2em -.35em,-.35em) rectangle (1.2*#2 em +.6em ,.35em);
+%			\draw [color=green] (1.2em -.32em,-.32em) rectangle (1.2*#2 em +.54em ,.32em);% visualize inner clipping box
+			\clip (1.2em -.32em,-.32em) rectangle (1.2*#2 em +.6em ,.32em);
 			\foreach \x in {1,2,...,5}{
-				\path [fill=softblack] (1.2*\x em,0) circle [radius=0.3em];
+				\path [fill=softblack] (1.2*\x em,0) circle [radius=0.27em];
 			}
 		\end{scope}
 		\foreach \x in {1,2,...,5}{
-			\draw [thick] (1.2*\x em,0) circle [radius=0.3em];
+			\draw [thick] (1.2*\x em,0) circle [radius=0.27em];
 		}
 	\end{tikzpicture}%
 	\vspace{0.12in}\newline% defines spacing between each entry
