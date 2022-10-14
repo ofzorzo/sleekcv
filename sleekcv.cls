@@ -20,7 +20,6 @@
 
 \RequirePackage{anyfontsize}% allows selection of different font sizes
 \RequirePackage[english]{babel} % correctly and automatically hyphenate english words
-\RequirePackage{changepage}% changes column width
 \RequirePackage{eso-pic}% creates the gray rectangle in the background
 \RequirePackage{etoolbox}% provides \AfterEndPreamble
 \RequirePackage{fontspec}% allows changing fonts settings
@@ -91,11 +90,13 @@
 \AfterEndPreamble{
 	\cvheader%
 	\fontspec{Montserrat}%
+	\setlength{\columnsep}{0.62in}
+	\setcolumnwidth{1.58in}
 	\begin{paracol}{2}%
-}
+	}
 
-% \AtEndDocument is still considered as being part of the document body. Therefore, we can finalize our multi-column document.
-\AtEndDocument{\end{paracol}}
+	% \AtEndDocument is still considered as being part of the document body. Therefore, we can finalize our multi-column document.
+	\AtEndDocument{\end{paracol}}
 
 \newcommand*{\margentry}[2][]{%
 	\def\temp{#1}\ifx\temp\empty% tests if subtitle is empty
@@ -140,10 +141,10 @@
 \newcommand{\margrade}[2]{%
 	#1\newline\vspace{-0.11in}\newline% prints subtitle
 	\begin{tikzpicture}
-%		\draw [fill=red] (1.2em -.32em,-.32em) rectangle (6em +.32em ,.32em);% visualize outer clipping box
+		%		\draw [fill=red] (1.2em -.32em,-.32em) rectangle (6em +.32em ,.32em);% visualize outer clipping box
 		\clip (1.2em -.32em,-.32em) rectangle (6em +.32em ,.32em);
 		\begin{scope}
-%			\draw [color=green] (1.2em -.32em,-.32em) rectangle (1.2*#2 em +.54em ,.32em);% visualize inner clipping box
+			%			\draw [color=green] (1.2em -.32em,-.32em) rectangle (1.2*#2 em +.54em ,.32em);% visualize inner clipping box
 			\clip (1.2em -.32em,-.32em) rectangle (1.2*#2 em +.6em ,.32em);
 			\foreach \x in {1,2,...,5}{
 				\path [fill=softblack] (1.2*\x em,0) circle [radius=0.27em];
@@ -159,22 +160,23 @@
 \newenvironment{margcol}{%
 	\switchcolumn[0]*%
 	\fontsize{8.43}{10.12}\selectfont%
-	\begin{adjustwidth}{0in}{1.93in}%
-		\sloppy%
-	}{
-	\end{adjustwidth}
-}
+	\sloppy%
+}{}
 
 \newenvironment{margsection}[1][]{%
 	{\raggedright \par}%
 	{\mtssubtitle \noindent\textbf{#1}}%
-	\vspace{0.09in}\hrule height 0.8pt \relax\vspace{0.16in}\noindent%
+	\vspace{0.09in}\hrule height 1pt \relax\vspace{0.16in}\noindent%
 }{\vspace{0.05in}}
 
 \newenvironment{bodycol}{%
 	\switchcolumn[1]%
-	\begin{adjustwidth}{-1.37in}{0in}%
-		\sloppy%
-	}{
-	\end{adjustwidth}
-}
+	\fontsize{8.43}{10.12}\selectfont%
+	\sloppy%
+}{}
+
+\newenvironment{bodysection}[1][]{%
+	{\raggedright \par}%
+	{\mtssubtitle \noindent\textbf{#1}}%
+	\vspace{0.09in}\hrule height 1pt \relax\vspace{0.16in}\noindent%
+}{\vspace{0.05in}}
