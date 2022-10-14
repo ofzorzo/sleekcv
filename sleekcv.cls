@@ -60,9 +60,9 @@
 \color[RGB]{33,33,33}
 \definecolor{softblack}{RGB}{33,33,33}
 
-\newfontfamily{\mtstitle}[LetterSpace=12]{Montserrat} % creates a new font family with more spacing for the title
-\newfontfamily{\mtssubtitle}[LetterSpace=24]{Montserrat}
-\newfontfamily{\mtsl}[UprightFont={* Light}]{Montserrat} % creates a new font family for the light version of Montserrat
+\newfontfamily{\mtstitle}[LetterSpace=12]{Montserrat}% creates a new font family with more spacing for the title
+\newfontfamily{\mtssubtitle}[LetterSpace=24]{Montserrat}% even more spacing
+\newfontfamily{\mtsl}[UprightFont={* Light}]{Montserrat}% creates a new font family for the light version of Montserrat
 
 \pagenumbering{gobble} % disables page numbering
 
@@ -134,19 +134,21 @@
 	\vspace{0.12in}\newline% defines spacing between each entry
 }
 
-%https://tex.stackexchange.com/questions/238898/in-line-graphics-in-text-to-represent-a-loading-bar-for-language-skills-in-a-cv
+% based on https://tex.stackexchange.com/questions/238898/in-line-graphics-in-text-to-represent-a-loading-bar-for-language-skills-in-a-cv
 \newcommand{\cvgrade}[2]{%
-	#1\newline% prints subtitle
+	#1\newline\vspace{-0.11in}\newline% prints subtitle
 	\begin{tikzpicture}
-		\clip (1em-.3em,-.3em) rectangle (5em +.5em ,.3em);
+%		\draw [fill=red] (1.2em -.35em,-.35em) rectangle (6em +.35em ,.35em);% visualize outer clipping box
+		\clip (1.2em -.35em,-.35em) rectangle (6em +.35em ,.35em);
 		\begin{scope}
-			\clip (1em-.3em,-.3em) rectangle (#2em +.5em ,.3em);
+%			\draw [color=green] (1.2em -.35em,-.35em) rectangle (1.2*#2 em +.6em ,.35em);% visualize inner clipping box
+			\clip (1.2em -.35em,-.35em) rectangle (1.2*#2 em +.6em ,.35em);
 			\foreach \x in {1,2,...,5}{
-				\path[fill=softblack] (\x em,0) circle (.25em);
+				\path [fill=softblack] (1.2*\x em,0) circle [radius=0.3em];
 			}
 		\end{scope}
 		\foreach \x in {1,2,...,5}{
-			\draw (\x em,0) circle (.25em);
+			\draw [thick] (1.2*\x em,0) circle [radius=0.3em];
 		}
 	\end{tikzpicture}%
 	\vspace{0.12in}\newline% defines spacing between each entry
