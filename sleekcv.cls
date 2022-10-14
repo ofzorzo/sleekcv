@@ -97,7 +97,7 @@
 % \AtEndDocument is still considered as being part of the document body. Therefore, we can finalize our multi-column document.
 \AtEndDocument{\end{paracol}}
 
-\newcommand*{\cventry}[2][]{%
+\newcommand*{\margentry}[2][]{%
 	\def\temp{#1}\ifx\temp\empty% tests if subtitle is empty
 	{\fontsize{7.03}{8.44}\selectfont #2}%
 	\else% 		if it's not empty...
@@ -108,13 +108,13 @@
 	\vspace{0.12in}\newline% defines spacing between each entry
 }
 
-\newcommand*{\cvimplicitlink}[2]{%
+\newcommand*{\margimplink}[2]{%
 	%	\vspace{0.14in}\newline% defines spacing between each entry
 	{\underline{\href{#2}{#1}}}% prints subtitle
 	\vspace{0.12in}\newline% defines spacing between each entry
 }
 
-\newcommand*{\cvexplicitlink}[3][]{%
+\newcommand*{\margexplink}[3][]{%
 	\def\temp{#1}\ifx\temp\empty% tests if subtitle is empty
 	{\fontsize{7.03}{8.44}\selectfont \href{#3}{#2}}%
 	\else% 		if it's not empty...
@@ -125,7 +125,7 @@
 	\vspace{0.12in}\newline% defines spacing between each entry
 }
 
-\newcommand*{\cvemail}[3][]{%
+\newcommand*{\margemail}[3][]{%
 	\def\temp{#1}\ifx\temp\empty% tests if subtitle is empty
 	{\fontsize{7.03}{8.44}\selectfont \href{mailto:#3}{#2}}%
 	\else% 		if it's not empty...
@@ -137,7 +137,7 @@
 }
 
 % based on https://tex.stackexchange.com/questions/238898/in-line-graphics-in-text-to-represent-a-loading-bar-for-language-skills-in-a-cv
-\newcommand{\cvgrade}[2]{%
+\newcommand{\margrade}[2]{%
 	#1\newline\vspace{-0.11in}\newline% prints subtitle
 	\begin{tikzpicture}
 %		\draw [fill=red] (1.2em -.32em,-.32em) rectangle (6em +.32em ,.32em);% visualize outer clipping box
