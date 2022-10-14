@@ -1,26 +1,25 @@
 \RequirePackage{reportmacrodefn}
-\reportmacrodefn\[
 
 \reportmacrodefn\switchcolumn
+\reportmacrodefn\defname
+\reportmacrodefn\cventry
+\reportmacrodefn\cvemail
+
 \documentclass{sleekcv}%
-\reportmacrodefn\switchcolumn
-%
+
 \defname{FELIPE}{ZORZO}%
 \defprofession{SOFTWARE ENGINEER}%
-% \listfiles
-%
+\listfiles
+
 \begin{document}%
+
 \reportmacrodefn\switchcolumn
-% \show\switchcolumn
-\begin{margincol}%
-My title
-\hrule
+\begin{margcol}%
 \lipsum%
-\end{margincol}%
-%
+\end{margcol}%
+
 \begin{bodycol}%
-% \layout
 \lipsum%
 \end{bodycol}%
+
 \end{document}%
-\reportmacrodefn\switchcolumn
