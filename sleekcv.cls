@@ -19,7 +19,7 @@
 \input{size1\@ptsize.clo}
 
 \RequirePackage{anyfontsize}% allows selection of different font sizes
-\RequirePackage[english]{babel} % correctly and automatically hyphenate english words
+\RequirePackage[english]{babel}% correctly and automatically hyphenate english words
 \RequirePackage{eso-pic}% creates the gray rectangle in the background
 \RequirePackage{etoolbox}% provides \AfterEndPreamble
 \RequirePackage{fontspec}% allows changing fonts settings
@@ -27,11 +27,15 @@
 \RequirePackage{tikz}% creates the rectangle aroung the name+profession
 \RequirePackage{xcolor}% allows color picking
 
-\PassOptionsToPackage{pdfpagelabels=false}{hyperref}% supress annoying hyperref warning
-\RequirePackage[hidelinks]{hyperref}% enables hypertext links in the document
+
+\newenvironment{description}{}{}% this environment is required by the enumitem package
+\RequirePackage{enumitem}% allows us to remove the spacing before the itemize environment
 
 \RequirePackage{float}% allows us to create a figure environment as if this was an article class
 \newfloat{figure}{htbp}{figs}
+
+\PassOptionsToPackage{pdfpagelabels=false}{hyperref}% supress annoying hyperref warning
+\RequirePackage[hidelinks]{hyperref}% enables hypertext links in the document
 
 \RequirePackage{paracol}% allows multiple columns
 % \backgroundcolor{c[0]}[rgb]{1,0.8,1} % visualize left  column
@@ -88,6 +92,8 @@
 
 % \AfterEndPreamble code is part of the document body. Therefore, we can instantiate our header and initialize our two columns.
 \AfterEndPreamble{
+	\newlist{cvitemize}{itemize}{1}
+	\setlist[cvitemize]{label={\mtsl•},topsep=0pt,labelsep=0.12in,leftmargin=*}
 	\cvheader%
 	\fontspec{Montserrat}%
 	\setlength{\columnsep}{0.62in}
@@ -169,14 +175,25 @@
 	\vspace{0.09in}\hrule height 1pt \relax\vspace{0.16in}\noindent%
 }{\vspace{0.05in}}
 
+% usage: \bodyentry{subtitle}{place}{beginning date}{end date}{summary}
+\newcommand*{\bodyentry}[5]{%
+	{\fontsize{9.53}{11.44}\selectfont \textbf{#1}}%
+	\hfill%
+	{\mtsl \fontsize{7.53}{9.04}\selectfont #2}%
+	\vspace{0.05in}\newline%
+	#3 — #4%
+	\vspace{0.11in}\newline%
+	\textit{#5}%
+	\vspace{0.11in}\par%
+}
+
 \newenvironment{bodycol}{%
 	\switchcolumn[1]%
-	\fontsize{8.43}{10.12}\selectfont%
+	\fontsize{8.43}{12.5}\selectfont%
 	\sloppy%
 }{}
 
 \newenvironment{bodysection}[1][]{%
-	{\raggedright \par}%
 	{\mtssubtitle \noindent\textbf{#1}}%
 	\vspace{0.09in}\hrule height 1pt \relax\vspace{0.16in}\noindent%
-}{\vspace{0.05in}}
+}{\par\vspace{0.16in}}
