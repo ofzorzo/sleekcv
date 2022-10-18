@@ -123,7 +123,7 @@
 % usage:	\begin{margcol}
 %				<content>
 %			\end{margcol}
-\newenvironment{margcol}{%
+\newenvironment*{margcol}{%
 	\switchcolumn[0]*%
 	\fontsize{8.43}{10.12}\selectfont%
 }{}
@@ -132,7 +132,7 @@
 % usage:	\begin{margsection}[<section title>]
 %				<content>
 %			\end{margsection}
-\newenvironment{margsection}[1][]{%
+\newenvironment*{margsection}[1][]{%
 	{\raggedright \par}%
 	{\mtssubtitle \noindent\textbf{#1}}%
 	\vspace{0.09in}\hrule height 1pt \relax\vspace{0.16in}\noindent%
@@ -211,7 +211,7 @@
 % usage:	\begin{bodycol}
 	%				<content>
 	%			\end{bodycol}
-\newenvironment{bodycol}{%
+\newenvironment*{bodycol}{%
 	\switchcolumn[1]%
 	\fontsize{8.43}{12.5}\selectfont%
 }{}
@@ -220,7 +220,7 @@
 % usage:	\begin{bodysection}[<section title>]
 	%				<content>
 	%			\end{bodysection}
-\newenvironment{bodysection}[1][]{%
+\newenvironment*{bodysection}[1][]{%
 	\ifnotempty{#1}{%
 		{\mtssubtitle \noindent\textbf{#1}}%
 		\vspace{0.09in}\hrule height 1pt \relax\vspace{0.16in}\noindent%
