@@ -35,7 +35,6 @@
 %-------------------------------------------------------------------------------
 
 \RequirePackage{anyfontsize}% allows selection of different font sizes
-\RequirePackage[english]{babel}% correctly and automatically hyphenate english words
 \RequirePackage{eso-pic}% creates the gray rectangle in the background
 \RequirePackage{etoolbox}% provides \AfterEndPreamble
 \RequirePackage{fontspec}% allows changing fonts settings
