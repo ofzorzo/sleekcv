@@ -93,7 +93,7 @@
 % \AfterEndPreamble code is part of the document body. Therefore, we can instantiate our header and initialize our two columns.
 \AfterEndPreamble{
 	\newlist{cvitemize}{itemize}{1}
-	\setlist[cvitemize]{label={\mtsl•},topsep=0pt,labelsep=0.12in,leftmargin=*}
+	\setlist[cvitemize]{label={\mtsl•},topsep=0pt,itemsep=0.02in,labelsep=0.12in,leftmargin=*}
 	\cvheader%
 	\fontspec{Montserrat}%
 	\setlength{\columnsep}{0.62in}
@@ -175,16 +175,70 @@
 	\vspace{0.09in}\hrule height 1pt \relax\vspace{0.16in}\noindent%
 }{\vspace{0.05in}}
 
+
+%\stepcounter{bodycounter}
+%\ifnum\value{bodycounter}=0%
+%	Certo%
+%\else
+%	Erro%
+%\fi
 % usage: \bodyentry{subtitle}{place}{beginning date}{end date}{summary}
+\newcommand*{\bodytext}{%
+	\ifnum\value{bodycounter}=0%
+		\stepcounter{bodycounter}%
+	\else%
+		\vspace{0.08in} \par \noindent%
+	\fi%
+}
+
+% prevents descenders from affecting line spacing: https://tex.stackexchange.com/questions/421791/preventing-letters-with-descenders-g-q-y-from-affecting-line-spacing
+\newcommand{\fixedvspace}[1]{%
+	\par\kern-\prevdepth\vspace{#1}%
+}
+
 \newcommand*{\bodyentry}[5]{%
-	{\fontsize{9.53}{11.44}\selectfont \textbf{#1}}%
-	\hfill%
-	{\mtsl \fontsize{7.53}{9.04}\selectfont #2}%
-	\vspace{0.05in}\newline%
-	#3 — #4%
-	\vspace{0.11in}\newline%
-	\textit{#5}%
-	\vspace{0.11in}\par%
+	\ifnum\value{bodycounter}=0%
+		\stepcounter{bodycounter}%
+	\else%
+		\vspace{0.24in} \par \noindent%
+	\fi%
+	%
+	\def\temp{#1}\ifx\temp\empty%
+		% do nothing
+	\else%
+		\begin{minipage}[t]{3.57in}%
+			\begin{flushleft}%
+				{\noindent \fontsize{9.53}{11.44}\selectfont \textbf{#1}}%
+			\end{flushleft}%
+			\fixedvspace{-0.05in}
+		\end{minipage}%
+	\fi%
+	%
+	\def\temp{#2}\ifx\temp\empty%
+		% do nothing
+	\else%
+		\hfill%
+		{\mtsl \fontsize{7.53}{9.04}\selectfont #2}%
+	\fi%
+	%
+	\def\temp{#3}\ifx\temp\empty%
+		% do nothing
+	\else%
+		\vspace{0.02in} \par \noindent%
+		#3%
+		\def\temp{#4}\ifx\temp\empty%
+			% do nothing
+		\else%
+			{ — #4}%
+		\fi%
+	\fi%
+	%
+	\def\temp{#5}\ifx\temp\empty%
+		% do nothing
+	\else%
+		\vspace{0.08in} \par \noindent%
+		\textit{#5}%
+	\fi%
 }
 
 \newenvironment{bodycol}{%
@@ -193,7 +247,16 @@
 	\sloppy%
 }{}
 
+\newcounter{bodycounter}
 \newenvironment{bodysection}[1][]{%
-	{\mtssubtitle \noindent\textbf{#1}}%
-	\vspace{0.09in}\hrule height 1pt \relax\vspace{0.16in}\noindent%
-}{\par\vspace{0.16in}}
+	\def\temp{#1}\ifx\temp\empty%
+		% if empty do nothing
+	\else%
+%		\stepcounter{bodycounter}%
+		{\mtssubtitle \noindent\textbf{#1}}%
+		\vspace{0.09in}\hrule height 1pt \relax\vspace{0.16in}\noindent%
+	\fi%
+}{%
+	\setcounter{bodycounter}{0}%
+	\par\vspace{0.28in}%
+}
