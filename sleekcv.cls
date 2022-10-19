@@ -135,6 +135,7 @@
 	{\raggedright \par}%
 	{\mtssubtitle \noindent\textbf{#1}}%
 	\vspace{0.09in}\hrule height 1pt \relax\vspace{0.16in}\noindent%
+	\sloppy
 }{\vspace{0.05in}}
 
 % creates an entry for the left column (aka margin)
@@ -184,7 +185,7 @@
 	\vspace{0.12in}\newline% defines spacing between each entry
 }
 
-% presents a grade to a skill in the form of circles. only works for semi integers.
+% presents a grade to a skill in the form of circles. only works for integers and half integers.
 % based on: https://tex.stackexchange.com/questions/238898/in-line-graphics-in-text-to-represent-a-loading-bar-for-language-skills-in-a-cv
 % usage: \margrade{<skill name>}{<grade>}
 \newcommand*{\margrade}[2]{%
@@ -229,8 +230,8 @@
 	\par\vspace{0.28in}%
 }
 
-% creates an entry for the right column. any combination of parameters can be omited and an appropriate entry will get created. you can even omit all parameters.
-% usage: \bodyentry{<subtitle>}{<place>}{<beginning date>}{<end date>}{<summary>}
+% creates an entry for the right column. any combination of parameters can be omited and an appropriate entry will get created. you can even omit all parameters; however, if you're thinking about doing it, you should probably use \bodytext.
+% usage: \bodyentry{<subtitle>}{<place>}{<start date>}{<end date>}{<summary>}
 \newcommand*{\bodyentry}[5]{%
 	\ifnum\value{bodycounter}=0%
 		\stepcounter{bodycounter}%
