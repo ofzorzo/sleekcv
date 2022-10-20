@@ -155,6 +155,8 @@
 	\fi
 }
 
+% adds the appropriate spacing to start a normal block of text. can be used, for example, inside a margsection to create a section with normal text only and no special entries.
+% usage: \margtext <content>
 \newcommand*{\margtext}{%
 	\handlemargcounter%
 }
@@ -306,6 +308,8 @@
 	\end{figure}
 }
 
+% handles spacing between margin entries
+% usage: \handlemargcounter
 \newcommand{\handlemargcounter}{%
 	\ifnum\value{margcounter}=0%
 		\stepcounter{margcounter}%
