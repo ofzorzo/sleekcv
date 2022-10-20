@@ -161,37 +161,22 @@
 	\handlemargcounter%
 }
 
-% creates an implicit link for the left column
-% usage: \margimplink{<shown text>}{<url>}
-\newcommand*{\margimplink}[2]{%
+% usage: \marglink[<optional subtitle>]{<shown text>}{<url>}
+\newcommand*{\marglink}[3][]{%
 	\handlemargcounter%
-	{\underline{\href{#2}{#1}}}% prints subtitle
-}
-
-% creates an explicit link for the left column
-% usage: \margexplink[<optional subtitle>]{<shown text>}{<url>}
-\newcommand*{\margexplink}[3][]{%
-	\handlemargcounter%
-	\def\temp{#1}\ifx\temp\empty% tests if subtitle is empty
-		{\fontsize{7.03}{8.44}\selectfont \href{#3}{#2}}%
-	\else% 		if it's not empty...
+	\def\temp{#1}\ifx\temp\empty% implicit link
+		{\underline{\href{#3}{#2}}}%
+	\else% explicit link
 		{\fontsize{6.47}{7.76}\selectfont \textbf{#1}}% prints subtitle
 		\vspace{0.03in}\newline%	... prints a newline so we have a space between subtitle and content
 		{\fontsize{7.03}{8.44}\selectfont \href{#3}{#2}}%
-	\fi
+	\fi%
 }
 
-% just like \margexplink, but creates a mailto link
-% usage: \margemail[<optional subtitle>]{<shown text>}{<url>}
+% just like \marglink, but creates a mailto link
+% usage: \margemail[<optional subtitle>]{<shown text>}{<email>}
 \newcommand*{\margemail}[3][]{%
-	\handlemargcounter%
-	\def\temp{#1}\ifx\temp\empty% tests if subtitle is empty
-		{\fontsize{7.03}{8.44}\selectfont \href{mailto:#3}{#2}}%
-	\else%
-		{\fontsize{6.47}{7.76}\selectfont \textbf{#1}}% prints subtitle
-		\vspace{0.03in}\newline%	... prints a newline so we have a space between subtitle and content
-		{\fontsize{7.03}{8.44}\selectfont \href{mailto:#3}{#2}}%
-	\fi
+	\marglink[#1]{#2}{mailto:#3}
 }
 
 % presents a grade to a skill in the form of circles. only works for integers and half integers.
