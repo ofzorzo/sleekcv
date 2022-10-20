@@ -2,7 +2,18 @@
 sleekcv is a TeX class that provides a sleek layout for curricula vitae. You can see a demonstration resume [here](template.pdf).
 
 # Documentation
-## Form
+- [sleekcv](#sleekcv)
+- [Documentation](#documentation)
+  - [Basic form](#basic-form)
+  - [margcol commands](#margcol-commands)
+    - [margsection](#margsection)
+    - [margentry](#margentry)
+    - [margtext](#margtext)
+    - [marglink](#marglink)
+    - [margemail](#margemail)
+    - [margrade](#margrade)
+
+## Basic form
 A complete example that shows all of sleekcv's functionality can be found [here](template.tex). A minimal example of sleekcv's form, however, looks like this:
 ```tex
 \documentclass{sleekcv}
