@@ -90,6 +90,7 @@
 
 \pagenumbering{gobble}% disables page numbering
 
+\newcounter{margcounter}% counts if the current margin section already has an entry
 \newcounter{bodycounter}% counts if the current body section already has an entry
 
 % \AfterEndPreamble code is part of the document body. Therefore, we can instantiate our header and initialize our two columns.
@@ -132,15 +133,19 @@
 %				<content>
 %			\end{margsection}
 \newenvironment*{margsection}[1][]{%
-	{\raggedright \par}%
-	{\mtssubtitle \noindent\textbf{#1}}%
+%	{\raggedright \par}%
+	{\par \mtssubtitle \noindent \textbf{#1}}%
 	\vspace{0.09in}\hrule height 1pt \relax\vspace{0.16in}\noindent%
-	\sloppy
-}{\vspace{0.05in}}
+%	\sloppy
+}{%
+	\setcounter{margcounter}{0}% resets counter in case we create more margsections
+	\vspace{0.31in}%
+}
 
 % creates an entry for the left column (aka margin)
 % usage: \margentry[<optional subtitle>]{<content>}
 \newcommand*{\margentry}[2][]{%
+	\handlemargcounter%
 	\def\temp{#1}\ifx\temp\empty% tests if subtitle is empty
 		{\fontsize{7.03}{8.44}\selectfont #2}%
 	\else% 		if it's not empty...
@@ -148,20 +153,23 @@
 		\vspace{0.03in}\newline%	... prints a newline so we have a space between subtitle and content
 		{\fontsize{7.03}{8.44}\selectfont #2}%
 	\fi
-	\vspace{0.12in}\newline% defines spacing between each entry
+}
+
+\newcommand*{\margtext}{%
+	\handlemargcounter%
 }
 
 % creates an implicit link for the left column
 % usage: \margimplink{<shown text>}{<url>}
 \newcommand*{\margimplink}[2]{%
-	%	\vspace{0.14in}\newline% defines spacing between each entry
+	\handlemargcounter%
 	{\underline{\href{#2}{#1}}}% prints subtitle
-	\vspace{0.12in}\newline% defines spacing between each entry
 }
 
 % creates an explicit link for the left column
 % usage: \margexplink[<optional subtitle>]{<shown text>}{<url>}
 \newcommand*{\margexplink}[3][]{%
+	\handlemargcounter%
 	\def\temp{#1}\ifx\temp\empty% tests if subtitle is empty
 		{\fontsize{7.03}{8.44}\selectfont \href{#3}{#2}}%
 	\else% 		if it's not empty...
@@ -169,12 +177,12 @@
 		\vspace{0.03in}\newline%	... prints a newline so we have a space between subtitle and content
 		{\fontsize{7.03}{8.44}\selectfont \href{#3}{#2}}%
 	\fi
-	\vspace{0.12in}\newline% defines spacing between each entry
 }
 
 % just like \margexplink, but creates a mailto link
 % usage: \margemail[<optional subtitle>]{<shown text>}{<url>}
 \newcommand*{\margemail}[3][]{%
+	\handlemargcounter%
 	\def\temp{#1}\ifx\temp\empty% tests if subtitle is empty
 		{\fontsize{7.03}{8.44}\selectfont \href{mailto:#3}{#2}}%
 	\else%
@@ -182,14 +190,21 @@
 		\vspace{0.03in}\newline%	... prints a newline so we have a space between subtitle and content
 		{\fontsize{7.03}{8.44}\selectfont \href{mailto:#3}{#2}}%
 	\fi
-	\vspace{0.12in}\newline% defines spacing between each entry
 }
 
 % presents a grade to a skill in the form of circles. only works for integers and half integers.
 % based on: https://tex.stackexchange.com/questions/238898/in-line-graphics-in-text-to-represent-a-loading-bar-for-language-skills-in-a-cv
 % usage: \margrade{<skill name>}{<grade>}
 \newcommand*{\margrade}[2]{%
-	#1\newline\vspace{-0.11in}\newline% prints subtitle
+	\ifnum\value{margcounter}=0%
+		\stepcounter{margcounter}%
+	\else%
+		\vspace{-0.02in}\newline%
+	\fi%
+	{\raggedright\par#1\vspace{0.03in}\newline}%
+%	\begin{flushleft}
+%		\vspace{-0.11in}#1\vspace{-0.11in}% prints subtitle
+%	\end{flushleft}
 	\begin{tikzpicture}
 		%		\draw [fill=red] (1.2em -.32em,-.32em) rectangle (6em +.32em ,.32em);% visualize outer clipping box
 		\clip (1.2em -.32em,-.32em) rectangle (6em +.32em ,.32em);
@@ -204,7 +219,6 @@
 			\draw [thick] (1.2*\x em,0) circle [radius=0.27em];
 		}
 	\end{tikzpicture}%
-	\vspace{0.12in}\newline% defines spacing between each entry
 }
 
 % right column environment
@@ -290,6 +304,14 @@
 			};
 		\end{tikzpicture}
 	\end{figure}
+}
+
+\newcommand{\handlemargcounter}{%
+	\ifnum\value{margcounter}=0%
+		\stepcounter{margcounter}%
+	\else%
+		\vspace{0.12in}\newline%
+	\fi%
 }
 
 % tests if an argument is not empty and executes given commands if true
