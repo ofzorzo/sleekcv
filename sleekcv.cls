@@ -136,7 +136,7 @@
 %	{\raggedright \par}%
 	{\par \mtssubtitle \noindent \textbf{#1}}%
 	\vspace{0.09in}\hrule height 1pt \relax\vspace{0.16in}\noindent%
-%	\sloppy
+	\sloppy%
 }{%
 	\setcounter{margcounter}{0}% resets counter in case we create more margsections
 	\vspace{0.31in}%
@@ -226,6 +226,7 @@
 		{\mtssubtitle \noindent\textbf{#1}}%
 		\vspace{0.09in}\hrule height 1pt \relax\vspace{0.16in}\noindent%
 	}%
+	\sloppy%
 }{%
 	\setcounter{bodycounter}{0}% resets counter in case we create more bodysections
 	\par\vspace{0.28in}%
